@@ -1,0 +1,88 @@
+/* Sidebar layout for dashboard */
+
+.dashboard-wrapper {
+    min-height: calc(100vh - 56px - 56px); /* header + footer approx */
+}
+
+.sidebar {
+    width: 64px; /* collapsed width */
+    transition: width 0.2s ease-in-out;
+    position: relative;
+}
+
+.sidebar-inner {
+    height: 100%;
+    padding: 1rem 0.5rem;
+}
+
+.sidebar-logo .sidebar-label {
+    display: none;
+}
+
+.sidebar-menu .nav-link {
+    color: #e5e7eb;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    white-space: nowrap;
+}
+
+.sidebar-menu .nav-link .sidebar-label {
+    display: none;
+}
+
+.sidebar-menu .nav-link .sidebar-icon {
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar-menu .nav-link:hover,
+.sidebar-menu .nav-link.active {
+    background-color: #1f2933;
+    color: #fff;
+}
+
+/* Expand on hover for larger screens */
+@media (min-width: 992px) {
+    .sidebar:hover {
+        width: 220px;
+    }
+
+    .sidebar:hover .sidebar-label {
+        display: inline;
+    }
+}
+
+/* On small screens, sidebar behaves like a fixed top menu */
+@media (max-width: 991.98px) {
+    .dashboard-wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+
+    .sidebar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-inline: 1rem;
+    }
+
+    .sidebar-label {
+        display: inline;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        margin-bottom: 0;
+    }
+}
+
