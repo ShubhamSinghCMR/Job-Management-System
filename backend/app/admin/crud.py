@@ -72,3 +72,51 @@ def get_users_grouped_by_period(db: Session, period: str):
     )
 
     return results
+
+# ===============================
+# USERS MANAGEMENT
+# ===============================
+
+def get_all_users(db: Session):
+    return db.query(User).all()
+
+
+def get_user_by_id(db: Session, user_id: int):
+    return db.query(User).filter(User.id == user_id).first()
+
+
+def update_user(db: Session, user: User):
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+def delete_user(db: Session, user: User):
+    db.delete(user)
+    db.commit()
+
+
+# ===============================
+# JOBS MANAGEMENT
+# ===============================
+
+def get_all_jobs(db: Session):
+    return db.query(Job).all()
+
+
+def get_job_by_id(db: Session, job_id: int):
+    return db.query(Job).filter(Job.id == job_id).first()
+
+
+def delete_job(db: Session, job: Job):
+    db.delete(job)
+    db.commit()
+
+
+# ===============================
+# APPLICATIONS MANAGEMENT
+# ===============================
+
+def get_all_applications(db: Session):
+    return db.query(Application).all()
