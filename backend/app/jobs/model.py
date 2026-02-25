@@ -10,9 +10,10 @@ class Job(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=False)
+    location = Column(String(255), nullable=False)
     status = Column(String(50), default="open")
     employer_id = Column(Integer, ForeignKey("users.id"), index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    
+
     employer = relationship("User", back_populates="jobs")
     applications = relationship("Application", back_populates="job")
