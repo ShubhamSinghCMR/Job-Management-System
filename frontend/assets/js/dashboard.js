@@ -414,7 +414,7 @@ function loadAdminUsers() {
         html += '<div class="p-4 text-center text-muted">No users yet.</div>';
       } else {
         html +=
-          '<div class="table-responsive"><table class="table table-hover mb-0">' +
+          '<div class="table-responsive"><table id="adminUsersTable" class="table table-hover mb-0">' +
           '<thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th width="140">Actions</th></tr></thead><tbody>';
         users.forEach(function (u) {
           var statusBadge = u.is_active !== false ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-secondary">Inactive</span>';
@@ -434,6 +434,7 @@ function loadAdminUsers() {
       }
       html += "</div></div>";
       el.innerHTML = html;
+      applyPaginationToTable("adminUsersTable", 10);
     })
     .catch(function (err) {
       el.innerHTML = '<div class="alert alert-danger">' + escapeHtml(err.message) + "</div>";
@@ -480,7 +481,7 @@ function loadAdminJobs() {
         html += '<div class="p-4 text-center text-muted">No jobs yet.</div>';
       } else {
         html +=
-          '<div class="table-responsive"><table class="table table-hover mb-0">' +
+          '<div class="table-responsive"><table id="adminJobsTable" class="table table-hover mb-0">' +
           '<thead><tr><th>ID</th><th>Title</th><th>Location</th><th>Employer ID</th><th>Date Posted</th><th width="100">Actions</th></tr></thead><tbody>';
         jobs.forEach(function (job) {
           html +=
@@ -498,6 +499,7 @@ function loadAdminJobs() {
       }
       html += "</div></div>";
       el.innerHTML = html;
+      applyPaginationToTable("adminJobsTable", 10);
     })
     .catch(function (err) {
       el.innerHTML = '<div class="alert alert-danger">' + escapeHtml(err.message) + "</div>";
@@ -531,7 +533,7 @@ function loadAdminApplications() {
         html += '<div class="p-4 text-center text-muted">No applications yet.</div>';
       } else {
         html +=
-          '<div class="table-responsive"><table class="table table-hover mb-0">' +
+          '<div class="table-responsive"><table id="adminApplicationsTable" class="table table-hover mb-0">' +
           '<thead><tr><th>ID</th><th>Job ID</th><th>Jobseeker ID</th><th>Status</th><th>Applied</th></tr></thead><tbody>';
         applications.forEach(function (app) {
           html +=
@@ -547,6 +549,7 @@ function loadAdminApplications() {
       }
       html += "</div></div>";
       el.innerHTML = html;
+      applyPaginationToTable("adminApplicationsTable", 10);
     })
     .catch(function (err) {
       el.innerHTML = '<div class="alert alert-danger">' + escapeHtml(err.message) + "</div>";
@@ -706,15 +709,17 @@ function loadEmployerJobs() {
       if (jobs.length === 0) {
         html += '<div class="p-4 text-center text-muted">No jobs yet. <a href="#" onclick="handleSectionClick(\'employer-post-job\'); return false;">Post a job</a>.</div>';
       } else {
-        html += '<div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Title</th><th>Location</th><th>Date Posted</th><th>Description</th><th width="140">Actions</th></tr></thead><tbody>';
+        html += '<div class="table-responsive"><table id="employerJobsTable" class="table table-hover mb-0"><thead><tr><th>Title</th><th>Location</th><th>Date Posted</th><th>Applicants</th><th>Description</th><th width="140">Actions</th></tr></thead><tbody>';
         jobs.forEach(function (job, idx) {
           var desc = (job.description || "").substring(0, 50);
           if ((job.description || "").length > 50) desc += "...";
+          var applicantCount = (job.applicant_count != null) ? Number(job.applicant_count) : 0;
           html +=
             "<tr>" +
             "<td>" + escapeHtml(job.title) + "</td>" +
             "<td>" + escapeHtml(job.location) + "</td>" +
             '<td class="text-nowrap">' + formatDate(job.created_at) + "</td>" +
+            "<td>" + applicantCount + "</td>" +
             '<td class="text-muted small">' + escapeHtml(desc) + "</td>" +
             '<td class="dash-actions-cell">' +
             '<button type="button" class="btn btn-sm btn-outline-primary btn-icon" title="Applications" data-job-id="' + job.id + '" data-job-title="' + escapeHtml(job.title) + '" onclick="employerViewApplicationsFromBtn(this)"><i class="fas fa-file-alt"></i></button>' +
@@ -726,6 +731,7 @@ function loadEmployerJobs() {
       }
       html += "</div></div>";
       el.innerHTML = html;
+      applyPaginationToTable("employerJobsTable", 10);
     })
     .catch(function (err) {
       el.innerHTML = '<div class="alert alert-danger">' + escapeHtml(err.message) + "</div>";
@@ -902,6 +908,118 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+/**
+ * Simple client-side pagination for tables.
+ * Shows up to rowsPerPage rows and renders a small pager under the table.
+ */
+function applyPaginationToTable(tableId, rowsPerPage) {
+  var table = document.getElementById(tableId);
+  if (!table) return;
+  rowsPerPage = rowsPerPage || 10;
+
+  var tbody = table.tBodies && table.tBodies[0];
+  if (!tbody) return;
+
+  var rows = Array.prototype.slice.call(tbody.rows || []);
+  if (!rows.length || rows.length <= rowsPerPage) return;
+
+  var currentPage = 1;
+  var totalPages = Math.ceil(rows.length / rowsPerPage);
+
+  function renderPage(page) {
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentPage = page;
+    var start = (currentPage - 1) * rowsPerPage;
+    var end = start + rowsPerPage;
+    rows.forEach(function (row, idx) {
+      row.style.display = idx >= start && idx < end ? "" : "none";
+    });
+    if (!pager) return;
+    var pageLinks = pager.querySelectorAll("[data-page]");
+    pageLinks.forEach(function (link) {
+      var pageNum = parseInt(link.getAttribute("data-page"), 10);
+      if (pageNum === currentPage) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+    var prevItem = pager.querySelector("[data-role='prev']");
+    var nextItem = pager.querySelector("[data-role='next']");
+    if (prevItem) prevItem.classList.toggle("disabled", currentPage === 1);
+    if (nextItem) nextItem.classList.toggle("disabled", currentPage === totalPages);
+  }
+
+  // Create pager container
+  var pager = document.createElement("div");
+  pager.className = "table-pagination px-3 py-2 border-top d-flex justify-content-end";
+
+  var nav = document.createElement("nav");
+  var ul = document.createElement("ul");
+  ul.className = "pagination pagination-sm mb-0";
+
+  // Prev
+  var prevLi = document.createElement("li");
+  prevLi.className = "page-item";
+  prevLi.setAttribute("data-role", "prev");
+  var prevA = document.createElement("a");
+  prevA.className = "page-link";
+  prevA.href = "#";
+  prevA.textContent = "Previous";
+  prevA.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentPage > 1) renderPage(currentPage - 1);
+  });
+  prevLi.appendChild(prevA);
+  ul.appendChild(prevLi);
+
+  // Page numbers
+  for (var p = 1; p <= totalPages; p++) {
+    var li = document.createElement("li");
+    li.className = "page-item";
+    var a = document.createElement("a");
+    a.className = "page-link";
+    a.href = "#";
+    a.textContent = String(p);
+    a.setAttribute("data-page", String(p));
+    (function (pageNum) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        renderPage(pageNum);
+      });
+    })(p);
+    li.appendChild(a);
+    ul.appendChild(li);
+  }
+
+  // Next
+  var nextLi = document.createElement("li");
+  nextLi.className = "page-item";
+  nextLi.setAttribute("data-role", "next");
+  var nextA = document.createElement("a");
+  nextA.className = "page-link";
+  nextA.href = "#";
+  nextA.textContent = "Next";
+  nextA.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (currentPage < totalPages) renderPage(currentPage + 1);
+  });
+  nextLi.appendChild(nextA);
+  ul.appendChild(nextLi);
+
+  nav.appendChild(ul);
+  pager.appendChild(nav);
+
+  // Insert pager just after the table's responsive container
+  var responsiveWrapper = table.parentElement;
+  if (responsiveWrapper && responsiveWrapper.parentElement) {
+    responsiveWrapper.parentElement.insertBefore(pager, responsiveWrapper.nextSibling);
+  }
+
+  renderPage(1);
+}
+
 function loadJobseekerDashboard() {
   var el = getMainContainer();
   if (!el) return;
@@ -989,7 +1107,7 @@ function loadJobseekerBrowseJobs() {
         html += '<div class="p-4 text-center text-muted">No jobs available to apply. Applied jobs are listed under My Applications.</div>';
       } else {
         html +=
-          '<div class="table-responsive"><table class="table table-hover mb-0">' +
+          '<div class="table-responsive"><table id="jobseekerBrowseJobsTable" class="table table-hover mb-0">' +
           '<thead><tr><th>Title</th><th>Company</th><th>Location</th><th>Date Posted</th><th width="120">Action</th></tr></thead><tbody>';
         availableJobs.forEach(function (job) {
           var company = (job.company && job.company.trim()) ? escapeHtml(job.company) : "—";
@@ -1007,6 +1125,7 @@ function loadJobseekerBrowseJobs() {
       }
       html += "</div></div>";
       el.innerHTML = html;
+      applyPaginationToTable("jobseekerBrowseJobsTable", 10);
     })
     .catch(function (err) {
       el.innerHTML = '<div class="alert alert-danger">' + escapeHtml(err.message) + "</div>";
@@ -1105,7 +1224,7 @@ function loadJobseekerApplications() {
           '<div class="p-4 text-center text-muted">No applications yet. <a href="#" onclick="handleSectionClick(\'jobseeker-browse-jobs\'); return false;">Browse jobs</a> to apply.</div>';
       } else {
         html +=
-          '<div class="table-responsive"><table class="table table-hover mb-0">' +
+          '<div class="table-responsive"><table id="jobseekerApplicationsTable" class="table table-hover mb-0">' +
           "<thead><tr><th>Job Title</th><th>Company</th><th>Location</th><th>Status</th><th>Applied</th><th width=\"180\">Actions</th></tr></thead><tbody>";
         applications.forEach(function (app) {
           var job = jobMap[app.job_id];
@@ -1128,6 +1247,7 @@ function loadJobseekerApplications() {
       }
       html += "</div></div>";
       el.innerHTML = html;
+      applyPaginationToTable("jobseekerApplicationsTable", 10);
     })
     .catch(function (err) {
       el.innerHTML = '<div class="alert alert-danger">' + escapeHtml(err.message) + "</div>";

@@ -35,6 +35,23 @@ def get_jobs_by_employer(db: Session, employer_id: int):
     return db.query(Job).filter(Job.employer_id == employer_id).order_by(Job.created_at.desc()).all()
 
 
+def get_jobs_by_employer_with_applicant_counts(db: Session, employer_id: int):
+    """Returns list of (Job, applicant_count)."""
+    count_subq = (
+        db.query(Application.job_id, func.count(Application.id).label("applicant_count"))
+        .group_by(Application.job_id)
+        .subquery()
+    )
+    rows = (
+        db.query(Job, func.coalesce(count_subq.c.applicant_count, 0).label("applicant_count"))
+        .outerjoin(count_subq, Job.id == count_subq.c.job_id)
+        .filter(Job.employer_id == employer_id)
+        .order_by(Job.created_at.desc())
+        .all()
+    )
+    return [(row[0], int(row[1])) for row in rows]
+
+
 def update_job(db: Session, job: Job) -> Job:
     db.add(job)
     db.commit()
@@ -60,7 +77,7 @@ def get_employer_stats(db: Session, employer_id: int):
         .outerjoin(Application, Job.id == Application.job_id)
         .filter(Job.employer_id == employer_id)
         .group_by(Job.id, Job.title, Job.location, Job.created_at)
-        .order_by(Job.created_at.desc())
+        .order_by(func.count(Application.id).desc())
         .all()
     )
     total_jobs = len(rows)

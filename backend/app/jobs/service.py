@@ -31,6 +31,10 @@ def get_employer_jobs(employer_id: int, db: Session):
     return crud.get_jobs_by_employer(db, employer_id)
 
 
+def get_employer_jobs_with_applicant_counts(employer_id: int, db: Session):
+    return crud.get_jobs_by_employer_with_applicant_counts(db, employer_id)
+
+
 def get_employer_stats(employer_id: int, db: Session):
     return crud.get_employer_stats(db, employer_id)
 

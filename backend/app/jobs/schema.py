@@ -22,6 +22,7 @@ class JobResponse(BaseModel):
     location: str
     employer_id: int
     created_at: Optional[datetime] = None
+    applicant_count: Optional[int] = None
 
     class Config:
         from_attributes = True

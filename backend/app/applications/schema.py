@@ -5,7 +5,7 @@ from typing import Optional
 
 class ApplicationResponse(BaseModel):
     id: int
-    job_id: int
+    job_id: Optional[int] = None
     jobseeker_id: int
     status: str
     applied_at: datetime

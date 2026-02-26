@@ -65,7 +65,21 @@ def list_my_jobs(
             detail="Only employers can view their jobs"
         )
 
-    return service.get_employer_jobs(current_user.id, db)
+    jobs_with_counts = service.get_employer_jobs_with_applicant_counts(
+        current_user.id, db
+    )
+    return [
+        JobResponse(
+            id=j.id,
+            title=j.title,
+            description=j.description,
+            location=j.location,
+            employer_id=j.employer_id,
+            created_at=j.created_at,
+            applicant_count=count,
+        )
+        for j, count in jobs_with_counts
+    ]
 
 
 @router.get("/my/stats", response_model=EmployerStatsResponse)
