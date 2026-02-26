@@ -1,74 +1,77 @@
-// Shared layout: header, footer, and basic nav links.
+/**
+ * Shared layout: header, footer, logout.
+ * For dashboard, sidebar is built by dashboard.js.
+ * On public pages (body.layout-public) the pushmenu is hidden (no sidebar).
+ */
+function getCurrentPage() {
+  var path = (window.location.pathname || "").toLowerCase();
+  var href = (window.location.href || "").toLowerCase();
+  var pathOrHref = path + " " + href;
 
-document.addEventListener("DOMContentLoaded", () => {
-    renderHeader();
-    renderFooter();
-});
-
-function renderHeader() {
-    const header = document.getElementById("header");
-    if (!header) return;
-
-    header.innerHTML = `
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
-            <div class="container-fluid px-3 px-lg-4">
-                <a class="navbar-brand" href="index.html">Job Portal</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav" aria-controls="navbarNav"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto" id="navLinks">
-                        ${buildNavLinks()}
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    `;
+  if (pathOrHref.indexOf("privacy") !== -1) return "privacy";
+  if (pathOrHref.indexOf("register") !== -1) return "register";
+  if (pathOrHref.indexOf("login") !== -1) return "login";
+  if (pathOrHref.indexOf("dashboard") !== -1) return "dashboard";
+  return "index";
 }
 
-function buildNavLinks() {
-    const token = window.localStorage?.getItem("access_token");
+function renderHeader() {
+  const header = document.getElementById("header");
+  if (!header) return;
 
-    if (!token) {
-        return `
-            <li class="nav-item">
-                <a class="nav-link" href="login.html">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="register.html">Register</a>
-            </li>
-        `;
-    }
+  var current = getCurrentPage();
+  var activeClass = " nav-link-active";
 
-    return `
-        <li class="nav-item">
-            <a class="nav-link" href="dashboard.html">Dashboard</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick="logoutFront()">Logout</a>
-        </li>
-    `;
+  const token = window.localStorage && window.localStorage.getItem("access_token");
+  var loginClass = current === "login" ? activeClass : "";
+  var registerClass = current === "register" ? activeClass : "";
+  var dashboardClass = current === "dashboard" ? activeClass : "";
+  var indexClass = current === "index" ? activeClass : "";
+
+  const navLinks = token
+    ? '<li class="nav-item"><a class="nav-link' + dashboardClass + '" href="dashboard.html">Dashboard</a></li>' +
+      '<li class="nav-item"><a class="nav-link" href="#" onclick="logoutFront(); return false;">Logout</a></li>'
+    : '<li class="nav-item"><a class="nav-link' + loginClass + '" href="login.html">Login</a></li>' +
+      '<li class="nav-item"><a class="nav-link' + registerClass + '" href="register.html">Register</a></li>';
+
+  const isPublic = document.body.classList.contains("layout-public");
+  const pushMenu = isPublic
+    ? ''
+    : '<li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a></li>';
+
+  /* When logged in, portal link goes to dashboard; when not, to index */
+  var portalLabel = '<span id="headerPortalName">Job Portal</span>';
+  var portalHref = token ? "dashboard.html" : "index.html";
+  var portalLinkExtra = token ? ' id="headerPortalLink"' : "";
+
+  header.innerHTML =
+    '<nav class="main-header navbar navbar-expand navbar-white navbar-light">' +
+    '<ul class="navbar-nav">' +
+    pushMenu +
+    '<li class="nav-item"><a class="nav-link' + indexClass + '" href="' + portalHref + '"' + portalLinkExtra + '>' + portalLabel + '</a></li>' +
+    '</ul>' +
+    '<ul class="navbar-nav ml-auto">' + navLinks + '</ul>' +
+    '</nav>';
 }
 
 function renderFooter() {
-    const footer = document.getElementById("footer");
-    if (!footer) return;
-
-    footer.innerHTML = `
-        <footer class="bg-black text-center text-muted py-3 mt-auto">
-            <small>&copy; 2026 Job Management System</small>
-        </footer>
-    `;
+  const footer = document.getElementById("footer");
+  if (!footer) return;
+  footer.innerHTML =
+    '<footer class="main-footer">' +
+    '<strong>Job Management System</strong>' +
+    ' <span class="ml-2">|</span> <a href="privacy.html" class="ml-2">Privacy Policy</a>' +
+    '</footer>';
 }
 
 function logoutFront() {
-    try {
-        window.localStorage?.removeItem("access_token");
-    } catch (_) {
-        // ignore
-    }
-    window.location.href = "login.html";
+  try {
+    window.localStorage && window.localStorage.removeItem("access_token");
+  } catch (_) {}
+  window.location.href = "login.html";
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  renderHeader();
+  renderFooter();
+});

@@ -9,6 +9,8 @@ from app.jobs.schema import (
     JobCreateRequest,
     JobUpdateRequest,
     JobResponse,
+    JobDetailResponse,
+    EmployerStatsResponse,
 )
 from app.jobs import service
 
@@ -35,9 +37,21 @@ def create_job(
     return service.create_job(current_user.id, data, db)
 
 
-@router.get("/", response_model=list[JobResponse])
+@router.get("/", response_model=list[JobDetailResponse])
 def list_all_jobs(db: Session = Depends(get_db)):
-    return service.get_all_jobs(db)
+    jobs = service.get_all_jobs(db)
+    return [
+        JobDetailResponse(
+            id=j.id,
+            title=j.title,
+            description=j.description,
+            location=j.location,
+            employer_id=j.employer_id,
+            created_at=j.created_at,
+            company=j.employer.company if j.employer else None,
+        )
+        for j in jobs
+    ]
 
 
 @router.get("/my", response_model=list[JobResponse])
@@ -52,6 +66,50 @@ def list_my_jobs(
         )
 
     return service.get_employer_jobs(current_user.id, db)
+
+
+@router.get("/my/stats", response_model=EmployerStatsResponse)
+def list_my_jobs_stats(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if current_user.role != UserRole.EMPLOYER:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only employers can view dashboard stats"
+        )
+
+    total_jobs, total_applications, hot_jobs = service.get_employer_stats(
+        current_user.id, db
+    )
+    return EmployerStatsResponse(
+        total_jobs=total_jobs,
+        total_applications=total_applications,
+        hot_jobs=hot_jobs,
+    )
+
+
+@router.get("/{job_id}", response_model=JobDetailResponse)
+def get_job(
+    job_id: int,
+    db: Session = Depends(get_db),
+):
+    job = service.get_job_by_id(db, job_id)
+    if not job:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Job not found"
+        )
+    company = job.employer.company if job.employer else None
+    return JobDetailResponse(
+        id=job.id,
+        title=job.title,
+        description=job.description,
+        location=job.location,
+        employer_id=job.employer_id,
+        created_at=job.created_at,
+        company=company,
+    )
 
 
 @router.put("/{job_id}", response_model=JobResponse)

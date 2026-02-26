@@ -1,0 +1,142 @@
+/**
+ * Privacy Policy page – matches login/register layout and card styling
+ */
+
+body.page-privacy {
+  background-color: #f3f2ef;
+  color: #000000;
+}
+
+body.page-privacy .content-wrapper {
+  background-color: #f3f2ef;
+  min-height: calc(100vh - 120px);
+  padding: 1.5rem 0;
+  width: 100%;
+}
+
+body.page-privacy .content {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 1.5rem 1rem;
+  margin: 0 !important;
+}
+
+body.page-privacy .content .container-fluid {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+body.page-privacy .content .row {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+body.page-privacy .content .row > [class*="col-"] {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+body.page-privacy .main-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+body.page-privacy .main-header .navbar-nav .nav-link {
+  color: #333 !important;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 1.5rem;
+}
+
+body.page-privacy .main-header .navbar-nav .nav-link:hover {
+  background-color: #f3f2ef;
+  color: #0a66c2 !important;
+}
+
+body.page-privacy .main-header .navbar-nav .nav-link.nav-link-active {
+  color: #0a66c2 !important;
+  font-weight: 600 !important;
+}
+
+body.page-privacy .main-header .navbar-nav .nav-link.nav-link-active:hover {
+  color: #004182 !important;
+}
+
+/* Card – same style as register/login */
+.privacy-wrap {
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.privacy-card {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: visible;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.privacy-card .card-header {
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: #ffffff;
+  border: none;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  border-radius: 12px 12px 0 0;
+}
+
+.privacy-card .card-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.privacy-card .card-body {
+  padding: 1.25rem 1.5rem;
+  color: #333;
+}
+
+.privacy-updated {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.privacy-h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.privacy-card .card-body p,
+.privacy-card .card-body ul {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.privacy-card .card-body ul {
+  padding-left: 1.5rem;
+}
+
+.privacy-back {
+  margin-bottom: 0;
+}
+
+.privacy-back .btn {
+  border-radius: 1.5rem;
+  font-weight: 500;
+}
+
+.privacy-back .btn:hover {
+  color: #fff;
+  background-color: #0a66c2;
+  border-color: #0a66c2;
+}

@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional
+from datetime import datetime
 
 
 class JobCreateRequest(BaseModel):
@@ -20,6 +21,26 @@ class JobResponse(BaseModel):
     description: str
     location: str
     employer_id: int
+    created_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True
+
+
+class JobDetailResponse(JobResponse):
+    """Job with employer company name for detail view."""
+    company: Optional[str] = None
+
+
+class HotJobEntry(BaseModel):
+    id: int
+    title: str
+    location: str
+    applicant_count: int
+    created_at: Optional[datetime] = None
+
+
+class EmployerStatsResponse(BaseModel):
+    total_jobs: int
+    total_applications: int
+    hot_jobs: list[HotJobEntry]

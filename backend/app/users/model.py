@@ -15,6 +15,11 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     failed_login_attempts = Column(Integer, default=0)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    
+    skills = Column(String(500), nullable=True)
+    location = Column(String(255), nullable=True)
+    designation = Column(String(100), nullable=True)
+    company = Column(String(200), nullable=True)
+    about = Column(String(1000), nullable=True)
+
     jobs = relationship("Job", back_populates="employer", cascade="all, delete")
     applications = relationship("Application", back_populates="jobseeker")

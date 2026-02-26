@@ -30,3 +30,25 @@ def get_my_applications(user_id: int, db: Session):
 
 def get_job_applications(job_id: int, db: Session):
     return crud.get_applications_by_job(db, job_id)
+
+
+def update_application_status(application_id: int, employer_id: int, status: str, db: Session):
+    application = crud.get_application_by_id(db, application_id)
+    if not application:
+        return None, "NOT_FOUND"
+    job = application.job
+    if not job or job.employer_id != employer_id:
+        return None, "FORBIDDEN"
+    application.status = status
+    crud.update_application(db, application)
+    return application, None
+
+
+def withdraw_application(application_id: int, user_id: int, db: Session):
+    application = crud.get_application_by_id(db, application_id)
+    if not application:
+        return None, "NOT_FOUND"
+    if application.jobseeker_id != user_id:
+        return None, "FORBIDDEN"
+    crud.delete_application(db, application)
+    return application, None

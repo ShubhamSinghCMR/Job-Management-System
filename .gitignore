@@ -36,6 +36,9 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Test DB (backend)
+backend/test_jobportal.db
+
 # Unit test / coverage reports
 htmlcov/
 .tox/

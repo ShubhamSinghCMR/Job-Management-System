@@ -1,88 +1,366 @@
-/* Sidebar layout for dashboard */
+/**
+ * Dashboard – employer (and shared) content styling
+ * Premium look aligned with login/register
+ */
 
-.dashboard-wrapper {
-    min-height: calc(100vh - 56px - 56px); /* header + footer approx */
-}
-
-.sidebar {
-    width: 64px; /* collapsed width */
-    transition: width 0.2s ease-in-out;
-    position: relative;
-}
-
-.sidebar-inner {
-    height: 100%;
-    padding: 1rem 0.5rem;
-}
-
-.sidebar-logo .sidebar-label {
-    display: none;
-}
-
-.sidebar-menu .nav-link {
-    color: #e5e7eb;
-    padding: 0.6rem 0.75rem;
-    border-radius: 0.4rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    white-space: nowrap;
-}
-
-.sidebar-menu .nav-link .sidebar-label {
-    display: none;
-}
-
-.sidebar-menu .nav-link .sidebar-icon {
-    width: 24px;
-    text-align: center;
-}
-
-.sidebar-menu .nav-link:hover,
-.sidebar-menu .nav-link.active {
-    background-color: #1f2933;
-    color: #fff;
-}
-
-/* Expand on hover for larger screens */
-@media (min-width: 992px) {
-    .sidebar:hover {
-        width: 220px;
-    }
-
-    .sidebar:hover .sidebar-label {
-        display: inline;
-    }
-}
-
-/* On small screens, sidebar behaves like a fixed top menu */
+/* Mobile: prevent horizontal overflow */
 @media (max-width: 991.98px) {
-    .dashboard-wrapper {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #333;
-    }
-
-    .sidebar-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-inline: 1rem;
-    }
-
-    .sidebar-label {
-        display: inline;
-    }
-
-    .sidebar-menu {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5rem;
-        margin-bottom: 0;
-    }
+  .content-wrapper {
+    overflow-x: hidden;
+  }
+  #pageContent .table-responsive {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
+/* Section title */
+#pageContent .dash-title,
+#pageContent h5.mb-3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+/* Page title (Dashboard, Browse Jobs, etc.) – spacing above for all pages */
+.content-header-spacing {
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0;
+}
+
+.content-header-spacing .page-title-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Stat card (employer overview) */
+#pageContent .dash-stat-card,
+#pageContent .card.bg-primary {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(10, 102, 194, 0.25);
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%) !important;
+  color: #fff !important;
+  overflow: hidden;
+}
+
+#pageContent .dash-stat-card .card-body,
+#pageContent .card.bg-primary .card-body {
+  padding: 1.25rem 1.5rem;
+}
+
+#pageContent .dash-stat-card h6,
+#pageContent .card.bg-primary h6 {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.95;
+  color: #fff !important;
+}
+
+#pageContent .dash-stat-card h4,
+#pageContent .card.bg-primary h4 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+  color: #fff !important;
+}
+
+/* Content cards */
+#pageContent .card {
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+#pageContent .card-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: #333;
+}
+
+#pageContent .card-header h6 {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+#pageContent .card-body {
+  padding: 1.25rem 1.5rem;
+}
+
+#pageContent .card-body.p-0 {
+  padding: 0;
+}
+
+/* Tables */
+#pageContent .table {
+  font-size: 0.9375rem;
+}
+
+#pageContent .table thead th {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #555;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 0.75rem 1rem;
+  background: #fafafa;
+}
+
+#pageContent .table tbody td {
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+#pageContent .table tbody tr:hover td {
+  background-color: #f8f9fa;
+}
+
+#pageContent .table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+#pageContent .table .text-muted.small {
+  font-size: 0.8125rem;
+  max-width: 200px;
+}
+
+/* Action buttons in tables */
+#pageContent .table .btn {
+  font-size: 0.8125rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+#pageContent .table .btn-outline-primary {
+  color: #0a66c2;
+  border-color: #0a66c2;
+}
+
+#pageContent .table .btn-outline-primary:hover {
+  background: #0a66c2;
+  color: #fff;
+  border-color: #0a66c2;
+}
+
+#pageContent .table .btn-outline-secondary {
+  color: #6c757d;
+  border-color: #dee2e6;
+}
+
+#pageContent .table .btn-outline-secondary:hover {
+  background: #6c757d;
+  color: #fff;
+  border-color: #6c757d;
+}
+
+#pageContent .table .btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+#pageContent .table .btn-outline-danger:hover {
+  background: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+}
+
+/* Form in dashboard (Post job, Edit job) */
+#pageContent .card .form-group {
+  margin-bottom: 1rem;
+}
+
+#pageContent .card label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.35rem;
+}
+
+#pageContent .card .form-control {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9375rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#pageContent .card .form-control:focus {
+  border-color: #0a66c2;
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.15);
+  outline: none;
+}
+
+#pageContent .card textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Primary button in dashboard */
+#pageContent .card .btn-primary {
+  background: #0a66c2;
+  border-color: #0a66c2;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+#pageContent .card .btn-primary:hover {
+  background: #004182;
+  border-color: #004182;
+  color: #fff;
+}
+
+#pageContent .card .btn-secondary {
+  border-radius: 8px;
+  font-size: 0.9375rem;
+}
+
+/* Alerts in dashboard forms */
+#pageContent .card .alert {
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+/* Empty state / text links */
+#pageContent .card-body.text-center a,
+#pageContent .card-body .text-center a {
+  color: #0a66c2;
+  font-weight: 600;
+}
+
+#pageContent .card-body.text-center a:hover,
+#pageContent .card-body .text-center a:hover {
+  color: #004182;
+  text-decoration: underline;
+}
+
+/* View link in recent jobs table */
+#pageContent .table .btn-outline-primary.mr-1 {
+  margin-right: 0.35rem;
+}
+
+/* Loading state */
+#pageContent .text-muted .fa-spinner {
+  margin-right: 0.5rem;
+}
+
+/* Applications modal (global – appended to body) */
+#employerApplicationsModal .modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+#employerApplicationsModal .modal-header {
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+}
+
+#employerApplicationsModal .modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#employerApplicationsModal .modal-header .close {
+  color: #fff;
+  opacity: 0.9;
+  text-shadow: none;
+}
+
+#employerApplicationsModal .modal-header .close:hover {
+  opacity: 1;
+}
+
+#employerApplicationsModal .table {
+  font-size: 0.875rem;
+}
+
+#employerApplicationsModal .table thead th {
+  padding: 0.6rem 1rem;
+}
+
+#employerApplicationsModal .table tbody td {
+  padding: 0.6rem 1rem;
+}
+
+/* Job posted success toast */
+.dash-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: #0d8050;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  z-index: 9999;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dash-toast.dash-toast-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Job detail modal (jobseeker View job) */
+#jobDetailModal .modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+#jobDetailModal .modal-header {
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+}
+
+#jobDetailModal .modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#jobDetailModal .modal-header .close {
+  color: #fff;
+  opacity: 0.9;
+}
+
+/* Icon-only action buttons in tables – keep on one line */
+#pageContent .table .btn-icon {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.15rem;
+}
+
+#pageContent .table td.dash-actions-cell {
+  white-space: nowrap;
+}

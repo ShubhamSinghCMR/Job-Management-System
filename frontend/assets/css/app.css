@@ -1,0 +1,170 @@
+/**
+ * Job Portal – custom overrides and layout
+ * Works with AdminLTE 3 (Bootstrap 4)
+ */
+
+/* Public pages: no sidebar, full-width content */
+body.layout-public .content-wrapper {
+  margin-left: 0 !important;
+}
+
+/* ========== Sidebar (dashboard) ========== */
+.main-sidebar {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow: visible;
+}
+.main-sidebar::-webkit-scrollbar,
+.main-sidebar .sidebar::-webkit-scrollbar {
+  display: none;
+}
+.main-sidebar,
+.main-sidebar .sidebar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.main-sidebar .sidebar {
+  padding-top: 0.75rem;
+  padding-bottom: 0.5rem;
+  overflow: visible;
+}
+
+.main-sidebar .nav-sidebar .nav-item {
+  margin-bottom: 0;
+}
+
+.main-sidebar .nav-sidebar {
+  overflow: visible;
+}
+
+.main-sidebar .nav-sidebar .nav-link {
+  border-radius: 0 8px 8px 0;
+  margin: 0 0.5rem 0.2rem 0.5rem;
+  padding: 0.65rem 1rem 0.65rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  transition: background 0.2s ease, color 0.2s ease;
+  overflow: visible;
+}
+
+.main-sidebar .nav-sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.main-sidebar .nav-sidebar .nav-link.active {
+  background: #0a66c2;
+  color: #fff;
+  font-weight: 600;
+}
+
+.main-sidebar .nav-sidebar .nav-link.active:hover {
+  background: #004182;
+  color: #fff;
+}
+
+/* Extra space to the right of the icon */
+.main-sidebar .nav-sidebar .nav-icon {
+  margin-right: 1.1rem;
+  width: 1.35rem;
+  text-align: center;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+.main-sidebar .nav-sidebar .nav-link p {
+  display: inline-block;
+  margin: 0;
+}
+
+/* Collapsed state: hide labels; expand on hover to show labels (desktop) */
+body.sidebar-collapse .main-sidebar {
+  transition: width 0.2s ease, margin-left 0.2s ease;
+}
+
+/* Desktop: sidebar expands on hover when collapsed */
+@media (min-width: 992px) {
+  body.sidebar-collapse .main-sidebar {
+    width: 66px !important;
+    max-width: 66px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    min-width: 66px;
+  }
+
+  body.sidebar-collapse .main-sidebar:hover {
+    width: 250px !important;
+    max-width: 250px !important;
+    min-width: 250px;
+  }
+
+  /* Show labels when sidebar is hover-expanded */
+  body.sidebar-collapse .main-sidebar:hover .nav-sidebar .nav-link p {
+    display: inline-block !important;
+  }
+
+  /* Shift content when sidebar is hover-expanded */
+  body.sidebar-collapse .main-sidebar:hover ~ .content-wrapper {
+    margin-left: 250px !important;
+  }
+
+  /* When expanded via button: fixed size, no change on hover */
+  body:not(.sidebar-collapse) .main-sidebar,
+  body:not(.sidebar-collapse) .main-sidebar:hover {
+    width: 250px !important;
+    min-width: 250px;
+    margin-left: 0 !important;
+    transition: none;
+  }
+
+  body.sidebar-collapse .content-wrapper,
+  body.sidebar-collapse .wrapper .content-wrapper {
+    margin-left: 66px !important;
+    transition: margin-left 0.2s ease;
+  }
+}
+
+body.sidebar-collapse .main-sidebar .nav-sidebar .nav-link p {
+  display: none;
+}
+
+/* Collapsed sidebar: no white gap to the right of the bar (all viewports) */
+body.sidebar-collapse .main-sidebar {
+  margin-right: 0 !important;
+}
+
+/* Collapsed sidebar: right margin so blue box and icon stay in full with visible grey strip on the right */
+body.sidebar-collapse .main-sidebar .nav-sidebar .nav-link {
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+body.sidebar-collapse .main-sidebar .sidebar {
+  padding-right: 0.5rem;
+}
+
+/* Job cards on landing */
+.job-card {
+  transition: box-shadow 0.2s ease;
+}
+
+.job-card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Active menu item in header – high specificity so it wins on all pages */
+.main-header .navbar-nav .nav-link.nav-link-active,
+body.page-register .main-header .nav-link.nav-link-active,
+body.page-home .main-header .nav-link.nav-link-active,
+body.page-login .main-header .nav-link.nav-link-active {
+  font-weight: 600 !important;
+  color: #0a66c2 !important;
+}
+
+.main-header .navbar-nav .nav-link.nav-link-active:hover,
+body.page-register .main-header .nav-link.nav-link-active:hover,
+body.page-home .main-header .nav-link.nav-link-active:hover,
+body.page-login .main-header .nav-link.nav-link-active:hover {
+  color: #004182 !important;
+}

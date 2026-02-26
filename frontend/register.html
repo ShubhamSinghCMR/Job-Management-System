@@ -1,99 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Job Portal - Register</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/css/global.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Job Portal – Register</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <link rel="stylesheet" href="assets/css/register.css" />
 </head>
-<body class="d-flex flex-column min-vh-100 bg-black text-white">
-<div id="layoutRoot" class="d-flex flex-column min-vh-100">
-    <header id="header"></header>
-
-    <main class="flex-grow-1">
-        <div class="container py-5" id="pageContent">
-            <div class="row justify-content-center">
-                <div class="col-md-5">
-                    <div class="card bg-dark border-secondary shadow-sm p-4">
-                        <h3 class="mb-3 text-center text-white">Create Account</h3>
-                        <p class="text-muted small text-center mb-4">
-                            Register as an Admin, Employer, or Jobseeker.
-                        </p>
-
-                        <div id="registerError" class="alert alert-danger py-2 d-none"></div>
-
-                        <form id="registerForm" novalidate>
-                            <div class="mb-3">
-                                <label for="name" class="form-label text-white">Full Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    class="form-control bg-black text-white border-secondary"
-                                    required
-                                />
-                            </div>
-                            <div class="mb-3">
-                                <label for="regEmail" class="form-label text-white">Email</label>
-                                <input
-                                    type="email"
-                                    id="regEmail"
-                                    class="form-control bg-black text-white border-secondary"
-                                    required
-                                />
-                            </div>
-                            <div class="mb-3">
-                                <label for="regPassword" class="form-label text-white">Password</label>
-                                <input
-                                    type="password"
-                                    id="regPassword"
-                                    class="form-control bg-black text-white border-secondary"
-                                    required
-                                />
-                            </div>
-                            <div class="mb-4">
-                                <label for="role" class="form-label text-white">Role</label>
-                                <select
-                                    id="role"
-                                    class="form-select bg-black text-white border-secondary"
-                                    required
-                                >
-                                    <option value="">Select role</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="employer">Employer</option>
-                                    <option value="jobseeker">Jobseeker</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-light w-100">
-                                Register
-                            </button>
-                        </form>
-
-                        <p class="mt-3 mb-0 text-center text-muted small">
-                            Already have an account?
-                            <a href="login.html" class="link-light">Login</a>
-                        </p>
-                    </div>
+<body class="hold-transition layout-top-nav layout-public page-register">
+<div class="wrapper">
+  <div id="header"></div>
+  <div class="content-wrapper" style="margin-left: 0;">
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5">
+            <div class="register-wrap">
+              <div class="card register-card">
+                <div class="card-header">
+                  <h1 class="card-title">Create account</h1>
                 </div>
+                <div class="card-body">
+                  <div id="registerError" class="alert alert-danger alert-register d-none" role="alert"></div>
+                  <form id="registerForm" novalidate>
+                    <div class="form-group">
+                      <label for="name">Full name</label>
+                      <input type="text" id="name" class="form-control" placeholder="e.g. John Smith" minlength="2" maxlength="100" autocomplete="name" />
+                      <div id="nameError" class="invalid-feedback" role="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <label for="regEmail">Email</label>
+                      <input type="email" id="regEmail" class="form-control" placeholder="you@example.com" maxlength="255" autocomplete="email" />
+                      <div id="regEmailError" class="invalid-feedback" role="alert"></div>
+                    </div>
+                    <div class="form-group">
+                      <label for="regPassword">Password</label>
+                      <input type="password" id="regPassword" class="form-control" placeholder="Min 6 characters" minlength="6" maxlength="72" autocomplete="new-password" />
+                      <p class="form-hint">6–72 characters, at least one letter and one number.</p>
+                      <div id="regPasswordError" class="invalid-feedback" role="alert"></div>
+                    </div>
+                    <div class="form-group" id="roleGroup">
+                      <label class="d-block mb-1">I want to</label>
+                      <div class="register-radio-wrap">
+                        <label class="register-radio-label">
+                          <input type="radio" name="role" value="employer" class="role-radio" />
+                          <span>Post jobs (Employer)</span>
+                        </label>
+                        <label class="register-radio-label">
+                          <input type="radio" name="role" value="jobseeker" class="role-radio" />
+                          <span>Find and apply for jobs (Jobseeker)</span>
+                        </label>
+                      </div>
+                      <div id="roleError" class="invalid-feedback" role="alert"></div>
+                    </div>
+                    <div class="form-group form-check" id="consentGroup">
+                      <input type="checkbox" id="privacyConsent" class="form-check-input" />
+                      <label class="form-check-label" for="privacyConsent">
+                        I agree to the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and consent to processing of my personal data.
+                      </label>
+                      <div id="consentError" class="invalid-feedback" role="alert"></div>
+                    </div>
+                    <button type="submit" class="btn btn-register">Register</button>
+                  </form>
+                  <p class="card-footer-link">
+                    Already have an account? <a href="login.html">Sign in</a>
+                  </p>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </main>
-
-    <footer id="footer"></footer>
+      </div>
+    </section>
+  </div>
+  <div id="footer"></div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
 <script src="assets/js/config.js"></script>
 <script src="assets/js/api.js"></script>
 <script src="assets/js/layout.js"></script>
 <script src="assets/js/auth.js"></script>
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-></script>
 </body>
 </html>
-

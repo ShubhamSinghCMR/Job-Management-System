@@ -1,0 +1,304 @@
+/**
+ * Register page – premium form styling (aligned with home/login)
+ */
+
+body.page-register {
+  background-color: #f3f2ef;
+  color: #000000;
+}
+
+body.page-register .content-wrapper {
+  background-color: #f3f2ef;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+body.page-register .content {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 1.5rem 1rem;
+  margin: 0 !important;
+}
+
+body.page-register .content .container-fluid {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+body.page-register .content .row {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+body.page-register .content .row > [class*="col-"] {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media (min-width: 576px) {
+  body.page-register .content .row > [class*="col-"] {
+    min-width: 300px;
+  }
+}
+
+body.page-register .main-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+body.page-register .main-header .navbar-nav .nav-link {
+  color: #333 !important;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 1.5rem;
+}
+
+body.page-register .main-header .navbar-nav .nav-link:hover {
+  background-color: #f3f2ef;
+  color: #0a66c2 !important;
+}
+
+/* Active nav link: blue by default on register page (same as login) */
+body.page-register .main-header .navbar-nav .nav-link.nav-link-active {
+  color: #0a66c2 !important;
+  font-weight: 600 !important;
+}
+
+body.page-register .main-header .navbar-nav .nav-link.nav-link-active:hover {
+  color: #004182 !important;
+}
+
+/* Centered card */
+.register-wrap {
+  width: 100%;
+  min-width: 280px;
+  max-width: 440px;
+  margin: 2rem auto;
+  box-sizing: border-box;
+}
+
+.register-card {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: visible;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.register-card .card-header {
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: #ffffff;
+  border: none;
+  padding: 1rem 1.25rem;
+  text-align: center;
+}
+
+.register-card .card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.register-card .card-subtitle {
+  font-size: 0.875rem;
+  opacity: 0.95;
+  margin: 0.25rem 0 0;
+}
+
+.register-card .card-body {
+  padding: 1.25rem 1.5rem;
+  box-sizing: border-box;
+}
+
+/* Form groups – compact */
+.register-card .form-group {
+  margin-bottom: 0.85rem;
+}
+
+.register-card .form-group:last-of-type {
+  margin-bottom: 1rem;
+}
+
+.register-card label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.register-card .form-control {
+  width: 100%;
+  max-width: 100%;
+  height: 2.4rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.9375rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.register-card .form-control:focus {
+  border-color: #0a66c2;
+  box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.15);
+  outline: none;
+}
+
+.register-card .form-control.is-invalid {
+  border-color: #d32f2f;
+  background-image: none;
+}
+
+.register-card .form-control.is-valid {
+  border-color: #0a66c2;
+}
+
+.register-card .invalid-feedback {
+  font-size: 0.8125rem;
+  color: #d32f2f;
+  margin-top: 0.35rem;
+  display: none;
+}
+
+.register-card .form-control.is-invalid ~ .invalid-feedback,
+.register-card .invalid-feedback.show {
+  display: block;
+}
+
+/* Role radio buttons – compact */
+.register-radio-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.register-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #333;
+  cursor: pointer;
+  margin: 0;
+  padding: 0.25rem 0;
+}
+
+.register-radio-label input.role-radio {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  accent-color: #0a66c2;
+  cursor: pointer;
+}
+
+.register-card #roleGroup.is-invalid .invalid-feedback.show {
+  display: block;
+}
+
+.register-card .form-hint {
+  font-size: 0.7rem;
+  color: #666;
+  margin-top: 0.2rem;
+}
+
+/* Submit button */
+.register-card .btn-register {
+  width: 100%;
+  height: 2.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  background: #0a66c2;
+  color: #ffffff;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.register-card .btn-register:hover {
+  background: #004182;
+  color: #ffffff;
+}
+
+.register-card .btn-register:active {
+  transform: scale(0.99);
+}
+
+/* Alert */
+.register-card .alert-register {
+  font-size: 0.8125rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.register-card .alert-register.d-none {
+  display: none !important;
+}
+
+/* Footer link – compact */
+.register-card .card-footer-link {
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.register-card .card-footer-link a {
+  color: #0a66c2;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-card .card-footer-link a:hover {
+  text-decoration: underline;
+  color: #004182;
+}
+
+/* Success toast (post-register countdown) */
+.register-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.5rem;
+  background: #0d8050;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  z-index: 9999;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.register-toast.register-toast-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.register-toast-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.register-toast-text {
+  white-space: nowrap;
+}

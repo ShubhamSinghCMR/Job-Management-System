@@ -5,6 +5,7 @@ from app.core.constants import UserRole
 class RegisterRequest(BaseModel):
     name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
+    # Backend enforces stronger rules; see service.register_user
     password: str = Field(..., min_length=6, max_length=72)
     role: UserRole
 

@@ -1,14 +1,35 @@
 from sqlalchemy.orm import Session
+
 from app.auth import crud
 from app.auth.schema import RegisterRequest
 from app.users.model import User
 from app.core.security import hash_password, verify_password, create_access_token
 
 
+def _password_strength_error(password: str) -> str | None:
+    """
+    Basic strength check:
+    - At least 8 characters (also enforced by schema)
+    - At least one letter
+    - At least one digit
+    """
+    has_letter = any(c.isalpha() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+
+    if not has_letter or not has_digit:
+        return "Password must contain at least one letter and one number."
+
+    return None
+
+
 def register_user(data: RegisterRequest, db: Session) -> tuple[User | None, str | None]:
     existing_user = crud.get_user_by_email(db, data.email)
     if existing_user:
         return None, "EMAIL_ALREADY_EXISTS"
+
+    pw_error = _password_strength_error(data.password)
+    if pw_error:
+        return None, pw_error
 
     user = User(
         name=data.name,

@@ -23,8 +23,16 @@ def get_all_jobs(db: Session):
     return crud.get_all_jobs(db)
 
 
+def get_job_by_id(db: Session, job_id: int):
+    return crud.get_job_by_id(db, job_id)
+
+
 def get_employer_jobs(employer_id: int, db: Session):
     return crud.get_jobs_by_employer(db, employer_id)
+
+
+def get_employer_stats(employer_id: int, db: Session):
+    return crud.get_employer_stats(db, employer_id)
 
 
 def update_job(
