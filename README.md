@@ -210,6 +210,7 @@ Change the password after first login via **Settings**.
 ## Screenshots
 
 **Website:**
+
 <img width="1919" height="843" alt="image" src="https://github.com/user-attachments/assets/69846ab8-451c-454c-8375-87b18fae986c" />
 <img width="1895" height="837" alt="image" src="https://github.com/user-attachments/assets/5d57e580-a6e5-43f5-a58c-76d196ff74ed" />
 <img width="1919" height="844" alt="image" src="https://github.com/user-attachments/assets/22602f79-7821-4f10-b8ec-1101004ff880" />
@@ -219,9 +220,11 @@ Change the password after first login via **Settings**.
 <img width="1902" height="837" alt="image" src="https://github.com/user-attachments/assets/09cb4c41-8c7a-4f7b-a967-645a376aa89e" />
 
 **Swagger Docs:**
+
 <img width="1908" height="811" alt="image" src="https://github.com/user-attachments/assets/ab8742f3-e527-4d73-84ca-76140d5aecfc" />
 
 **Tests:**
+
 <img width="908" height="398" alt="image" src="https://github.com/user-attachments/assets/5d2b3143-4fc1-44c3-8375-6f21f7bb8bcc" />
 
 ---
